@@ -1,0 +1,31 @@
+<% provide(:title, current_user.username) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= current_user.username %>
+      </h1>
+    </section>
+
+    <%= form_for @micropost, url: microposts_create_path do |f| %>
+      <div class="field">
+        <%= f.text_area :content, placeholder: "tweet" %>
+      </div>
+      <%= f.submit "Post", class: "btn btn-primary" %>
+    <% end %>
+
+  </aside>
+  <div class="col-md-8">
+    <% if current_user.microposts.any? %>
+      <h3>Tweets (<%= current_user.microposts.count %>)</h3>
+      <% @microposts.each do |post| %>
+        <span class="content"><%= post.content %></span>
+        <span class="timestamp">
+          Tweet <%= time_ago_in_words(post.created_at) %> ago.
+        </span>
+        <%= link_to("削除", "/microposts/#{post.id}/destroy", {method: "post"}) %>
+        <%= link_to("編集", "/microposts/#{post.id}/edit", {method: "get"}) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

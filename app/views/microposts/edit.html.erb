@@ -1,0 +1,6 @@
+<%= form_for @micropost, url:"/microposts/#{@micropost.id}/update", html: {method: 'POST'} do |f| %>
+    <div class="field">
+      <%= f.text_area :content, placeholder: "tweet" %>
+    </div>
+    <%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>
